@@ -76,11 +76,15 @@ class LMOClockProvider : ClockProviderPlugin {
 
     override fun getClocks(): List<ClockMetadata> = LMO_CLOCKS.map { ClockMetadata(it) }
 
-    override fun createClock(settings: ClockSettings): ClockController {
-        val clockId = settings.clockId
+    private fun validateClockId(clockId: String?): String {
         if (clockId == null || !LMO_CLOCKS.contains(clockId)) {
-            throw IllegalArgumentException("${settings.clockId} is unsupported by $TAG")
+            throw IllegalArgumentException("$clockId is unsupported by $TAG")
         }
+        return clockId
+    }
+
+    override fun createClock(settings: ClockSettings): ClockController {
+        val clockId = validateClockId(settings.clockId)
 
         return LMOClockController(
             clockId,
@@ -95,10 +99,10 @@ class LMOClockProvider : ClockProviderPlugin {
     }
 
     override fun getClockPickerConfig(settings: ClockSettings): ClockPickerConfig {
-        val clockId = settings.clockId
-        if (clockId == null || !LMO_CLOCKS.contains(clockId) || !this::pluginContext.isInitialized) {
-            throw IllegalArgumentException("${settings.clockId} is unsupported by $TAG")
+        if (!this::pluginContext.isInitialized) {
+            throw IllegalStateException("Plugin context not initialized")
         }
+        val clockId = validateClockId(settings.clockId)
 
         val thumbnail = ResourcesCompat.getDrawable(
             pluginContext.resources,
