@@ -106,14 +106,22 @@ class LMOClockProvider : ClockProviderPlugin {
             null
         ) ?: throw NullPointerException("Default thumbnail is null") // not so important but just in case
 
-        // TODO: Check where it's used and fix it correctly
-        //       with proper clock names and description.
-        //       right now, plugin is broken when using plugin resources.
+        // Create a temporary controller to get proper clock name and description
+        val tempController = LMOClockController(
+            clockId,
+            pluginContext,
+            sysuiContext,
+            LayoutInflater.from(pluginContext),
+            pluginContext.resources,
+            sysuiContext.resources,
+            settings,
+            messageBuffers,
+        )
+
         return ClockPickerConfig(
             clockId,
-            "Default clock",
-            "Default clock description",
-            // TODO(b/352049256): Update placeholder to actual resource
+            tempController.config.name,
+            tempController.config.description,
             thumbnail,
             isReactiveToTone = true,
             axes = emptyList(),
