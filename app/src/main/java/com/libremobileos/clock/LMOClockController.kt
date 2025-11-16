@@ -73,19 +73,14 @@ class LMOClockController(
     }
 
     init {
-        // val parent = FrameLayout(ctx)
         smallClock =
             DefaultClockFaceController(
-                // layoutInflater.inflate(R.layout.lmo_clock_small, parent, false)
-                //       as AnimatableClockView,
                 AnimatableClockView.getSmallClockView(ctx, clockId),
                 settings?.seedColor,
                 messageBuffers?.smallClockMessageBuffer,
             )
         largeClock =
             LargeClockFaceController(
-                // layoutInflater.inflate(R.layout.lmo_clock_large, parent, false)
-                //        as AnimatableClockView,
                 AnimatableClockView.getLargeClockView(ctx, clockId),
                 settings?.seedColor,
                 messageBuffers?.largeClockMessageBuffer,
