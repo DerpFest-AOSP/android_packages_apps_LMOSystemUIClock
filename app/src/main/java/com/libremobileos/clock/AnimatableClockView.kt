@@ -108,6 +108,7 @@ constructor(
     private var isDozing = false
     private var lastAodOffsetX = 0f
     private var lastAodOffsetY = 0f
+    private var burnInReturnAnimator: Runnable? = null
 
     @VisibleForTesting
     var textAnimatorFactory: (Layout, () -> Unit) -> TextAnimator = { layout, invalidateCb ->
@@ -199,6 +200,8 @@ constructor(
     override fun onDetachedFromWindow() {
         removeCallbacks(burnInTicker)
         burnInTickerPosted = false
+        burnInReturnAnimator?.let { removeCallbacks(it) }
+        burnInReturnAnimator = null
         super.onDetachedFromWindow()
     }
 
@@ -248,6 +251,7 @@ constructor(
             burnInTickerPosted = false
             lastAodOffsetX = burnInOffsetX
             lastAodOffsetY = burnInOffsetY
+            burnInReturnAnimator?.let { removeCallbacks(it) }
             animateBurnInReturn()
         }
     }
@@ -311,11 +315,13 @@ constructor(
         val h: Handler? = handler
         if (h != null) {
             h.postAtTime(burnInTicker, whenUptime)
+            burnInTickerPosted = true
+            h.postDelayed({ burnInTickerPosted = false }, msToNextMinute)
         } else {
             postDelayed(burnInTicker, msToNextMinute)
+            burnInTickerPosted = true
+            postDelayed({ burnInTickerPosted = false }, msToNextMinute)
         }
-        burnInTickerPosted = true
-        post { burnInTickerPosted = false }
     }
 
     private fun animateBurnInReturn() {
@@ -325,14 +331,23 @@ constructor(
         val duration = 300L
         val anim = object : Runnable {
             override fun run() {
+                if (!isAttachedToWindow) {
+                    burnInReturnAnimator = null
+                    return
+                }
                 val elapsed = System.currentTimeMillis() - startTime
                 val progress = (elapsed.toFloat() / duration).coerceIn(0f, 1f)
                 burnInOffsetX = startOffsetX * (1f - progress)
                 burnInOffsetY = startOffsetY * (1f - progress)
                 updateTranslationFromOffsets()
-                if (progress < 1f) postDelayed(this, 16)
+                if (progress < 1f) {
+                    postDelayed(this, 16)
+                } else {
+                    burnInReturnAnimator = null
+                }
             }
         }
+        burnInReturnAnimator = anim
         post(anim)
     }
 
