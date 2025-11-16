@@ -17,7 +17,7 @@ import com.android.systemui.plugins.clocks.ClockPickerConfig
 import com.android.systemui.plugins.clocks.ClockProviderPlugin
 import com.android.systemui.plugins.clocks.ClockSettings
 
-private val TAG = LMOClockProvider::class.simpleName
+private val TAG = LMOClockProvider::class.simpleName ?: "LMOClockProvider"
 
 const val ALBERT_SANS_CLOCK_ID = "AlbertSansClock"
 const val BLAKA_CLOCK_ID = "BlakaClock"
