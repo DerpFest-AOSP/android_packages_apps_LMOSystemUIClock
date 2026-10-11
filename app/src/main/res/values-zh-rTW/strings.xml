@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="clock_albert_sans_description">Albert Sans 數位時鐘</string>
+    <string name="clock_blaka_description">Blaka 數位時鐘</string>
+    <string name="clock_creepster_description">Creepster 數位時鐘</string>
+    <string name="clock_kablammo_description">Kablammo 數位時鐘</string>
+    <string name="clock_modak_description">Modak 數位時鐘</string>
+    <string name="clock_mystery_quest_description">Mystery Quest 數位時鐘</string>
+    <string name="clock_rubik_dirt_description">Rubik Dirt 數位時鐘</string>
+    <string name="clock_rubik_distressed_description">Rubik Distressed 數位時鐘</string>
+    <string name="clock_rubik_gemstones_description">Rubik Gemstones 數位時鐘</string>
+    <string name="clock_rubik_marker_hatch_description">Rubik Marker Hatch 數位時鐘</string>
+    <string name="clock_subway_description">以地鐵字型為靈感的粗體都會風格</string>
+    <string name="clock_ridge_description">具有稜線輪廓的銳利造型</string>
+    <string name="clock_beauty_description">優雅流暢的字形</string>
+    <string name="clock_sfpro_description">現代圓角無襯線字型，簡潔俐落</string>
+    <string name="clock_spacegame_description">充滿未來感的科幻字型</string>
+    <string name="clock_accuratist_description">精密的幾何設計</string>
+    <string name="clock_nothingdot_description">Nothing 點陣時鐘</string>
+    <string name="clock_asimovian_description">復古未來風格的科幻設計</string>
+    <string name="clock_cabinsketch_description">帶有斑駁質感的活潑設計</string>
+    <string name="clock_indieflower_description">活潑童趣的手寫字型</string>
+    <string name="clock_specialelite_description">打字機風格字型</string>
+    <string name="clock_deadjim_description">星際爭霸戰風格字型</string>
+</resources>
